@@ -16,7 +16,7 @@ Resources:
       CodeUri: RandomEntrySelector
       Description: A function that returns a random entry from a list file passed
         to it.
-      Handler: lambda_handler.lambda_handler
+      Handler: RandomEntrySelector.lambda_handler
       MemorySize: 128
       Policies:
       - SESSendBouncePolicy:

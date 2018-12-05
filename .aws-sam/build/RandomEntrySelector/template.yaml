@@ -9,7 +9,7 @@ Resources:
     # Define a function that reads a specified file from S3
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: lambda_handler.lambda_handler
+      Handler: GreetingsFunction.lambda_handler
       Runtime: python3.6
       CodeUri: .
       Description: A function that calls the RandomEntrySelector and a weather data API and returns an HTML webpage.
@@ -20,7 +20,7 @@ Resources:
             IdentityName: !Ref IdentityNameParameter
       Events:
         GreetingsFunctionApi:
-          # Define an API Gateway endpoint that responds to HTTP GET at /inventory
+          # Define an API Gateway endpoint that responds to HTTP GET at /greeting
           Type: Api
           Properties:
             Path: /greeting
@@ -31,11 +31,15 @@ Resources:
       DomainName: hello.emshea.com
       EndpointConfiguration: 
         EndpointConfiguration
+  
+  #SrcBucket:
+    #Type: AWS::S3::Bucket
+
   RandomEntrySelector:
     # Define a function that reads a specified file from S3
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: lambda_handler.lambda_handler
+      Handler: RandomEntrySelector.lambda_handler
       Runtime: python3.6
       CodeUri: .
       Description: A function that returns a random entry from a list file passed to it.

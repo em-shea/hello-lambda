@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A serverless web app that generates a random greeting in a random font
+  color, as well as the current weather data.
+Parameters:
+  IdentityNameParameter:
+    Type: String
+Resources:
+  GreetingsFunction:
+    Properties:
+      CertificateArn: arn:aws:acm:us-east-1:789896561553:certificate/1ef686da-19c6-42f5-b624-f7a91077ca5b
+      DomainName: hello.emshea.com
+      EndpointConfiguration: EndpointConfiguration
+    Type: AWS::ApiGateway::DomainName
+  RandomEntrySelector:
+    Properties:
+      CodeUri: RandomEntrySelector
+      Description: A function that returns a random entry from a list file passed
+        to it.
+      Handler: lambda_handler.lambda_handler
+      MemorySize: 128
+      Policies:
+      - SESSendBouncePolicy:
+          IdentityName:
+            Ref: IdentityNameParameter
+      Runtime: python3.6
+      Timeout: 3
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

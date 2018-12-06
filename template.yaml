@@ -2,50 +2,52 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: A serverless web app that generates a random greeting in a random font color, as well as the current weather data.
 Parameters: 
-    IdentityNameParameter: 
+    GreetingsList: 
+      Type: String
+    ColorsList:
+      Type: String
+    WeatherAPIKey:
       Type: String
 Resources:
   GreetingsFunction:
     # Define a function that reads a specified file from S3
     Type: 'AWS::Serverless::Function'
     Properties:
+      FunctionName: GreetingsFunction
       Handler: GreetingsFunction.lambda_handler
-      Runtime: python3.6
+      Runtime: python3.7
       CodeUri: ./GreetingsFunction
       Description: A function that calls the RandomEntrySelector and a weather data API and returns an HTML webpage.
       MemorySize: 128
       Timeout: 3
       Policies:
-        -AWSLambdaExecute
-        -AWSLambdaRole
+       - AWSLambdaExecute
+       - AWSLambdaRole
       Environment:
         Variables:
-          greetings-list: https://s3.amazonaws.com/greetings-emshea/greetingslist.json
-          colors-list: https://s3.amazonaws.com/greetings-emshea/colorslist.json
+          GREETINGS_LIST: !Ref GreetingsList
+          COLORS_LIST: !Ref ColorsList
+          WEATHER_API_KEY: !Ref WeatherAPIKey
       Events:
         GreetingsFunctionApi:
-          # Define an API Gateway endpoint that responds to HTTP GET at /greeting
+          # Define an API Gateway endpoint that responds to HTTP GET /greetings
           Type: Api
           Properties:
-            Path: /greeting
+            Path: /greetings
             Method: GET
-    Type: AWS::ApiGateway::DomainName
-    Properties: 
-      CertificateArn: arn:aws:acm:us-east-1:789896561553:certificate/1ef686da-19c6-42f5-b624-f7a91077ca5b
-      DomainName: hello.emshea.com
-      EndpointConfiguration: 
-        EndpointConfiguration
 
   RandomEntrySelector:
     # Define a function that reads a specified file from S3
     Type: 'AWS::Serverless::Function'
     Properties:
+      FunctionName: RandomEntrySelector
       Handler: RandomEntrySelector.lambda_handler
-      Runtime: python3.6
+      Runtime: python3.7
       CodeUri: ./RandomEntrySelector
       Description: A function that returns a random entry from a list file passed to it.
       MemorySize: 128
       Timeout: 3
       Policies:
-        -AWSLambdaExecute
+       - AWSLambdaExecute
+       - AWSLambdaRole
         

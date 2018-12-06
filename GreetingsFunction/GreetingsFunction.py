@@ -29,7 +29,7 @@ def lambda_handler(event, context):
         FunctionName="RandomEntrySelector",
         InvocationType='RequestResponse',
         Payload=json.dumps({"file":
-            os.environ['greetings-list']
+            os.environ['GREETINGS_LIST']
         })
     )
     response_json = invoke_response['Payload'].read()
@@ -40,7 +40,7 @@ def lambda_handler(event, context):
         FunctionName="RandomEntrySelector",
         InvocationType='RequestResponse',
         Payload=json.dumps({"file":
-            os.environ['colors-list']
+            os.environ['COLORS_LIST']
         })
     )
     response_json_color = invoke_response_color['Payload'].read()

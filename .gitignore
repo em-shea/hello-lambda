@@ -1,5 +1,6 @@
 # SAM build artifacts
 .aws-sam/build
+packaged-template.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -25,6 +25,7 @@ def get_weather(location):
     return condensed_weather_list
 
 def lambda_handler(event, context):
+    """Calls RandomEntrySelector function and passes greetings and colors list s3 files"""
     invoke_response = lambda_client.invoke(
         FunctionName="RandomEntrySelector",
         InvocationType='RequestResponse',
@@ -47,6 +48,7 @@ def lambda_handler(event, context):
     response_python_color = json.loads(response_json_color)
     word_color = response_python_color["body"]
 
+    """Allows users to submit a different weather location than the default Seattle with queryStringParameters"""
     if event["queryStringParameters"] != None and "l" in event["queryStringParameters"]:
         location = event["queryStringParameters"]["l"]
     else:

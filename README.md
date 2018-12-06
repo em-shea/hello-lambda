@@ -5,5 +5,5 @@ When invoked by an HTTP request, GreetingsFunction sends a list of possible gree
 
 The GreetingsFunction also calls a current weather data API - the default location is Seattle but users can pass a new location to the weather data API using query string paramaters.
 
-Example: https://hello.emshea.com/?=Portland
+Example: https://hello.emshea.com/?l=Portland
 

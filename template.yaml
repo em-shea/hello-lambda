@@ -30,10 +30,10 @@ Resources:
           WEATHER_API_KEY: !Ref WeatherAPIKey
       Events:
         GreetingsFunctionApi:
-          # Define an API Gateway endpoint that responds to HTTP GET /greetings
+          # Define an API Gateway endpoint that responds to HTTP GET
           Type: Api
           Properties:
-            Path: /greetings
+            Path: /
             Method: GET
 
   RandomEntrySelector:

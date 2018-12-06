@@ -11,13 +11,17 @@ Resources:
     Properties:
       Handler: GreetingsFunction.lambda_handler
       Runtime: python3.6
-      CodeUri: .
+      CodeUri: ./GreetingsFunction
       Description: A function that calls the RandomEntrySelector and a weather data API and returns an HTML webpage.
       MemorySize: 128
       Timeout: 3
       Policies:
-        - SESSendBouncePolicy:
-            IdentityName: !Ref IdentityNameParameter
+        -AWSLambdaExecute
+        -AWSLambdaRole
+      Environment:
+        Variables:
+          greetings-list: https://s3.amazonaws.com/greetings-emshea/greetingslist.json
+          colors-list: https://s3.amazonaws.com/greetings-emshea/colorslist.json
       Events:
         GreetingsFunctionApi:
           # Define an API Gateway endpoint that responds to HTTP GET at /greeting
@@ -38,11 +42,10 @@ Resources:
     Properties:
       Handler: RandomEntrySelector.lambda_handler
       Runtime: python3.6
-      CodeUri: .
+      CodeUri: ./RandomEntrySelector
       Description: A function that returns a random entry from a list file passed to it.
       MemorySize: 128
       Timeout: 3
       Policies:
-        - SESSendBouncePolicy:
-            IdentityName: !Ref IdentityNameParameter  
+        -AWSLambdaExecute
         
